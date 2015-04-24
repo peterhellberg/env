@@ -1,7 +1,5 @@
 /*
 
-Package env
-
 Load environment variables into Go types, with fallback values.
 
 Installation
