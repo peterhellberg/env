@@ -79,6 +79,26 @@ func TestDurationDefault(t *testing.T) {
 	}
 }
 
+func TestFloat64(t *testing.T) {
+	in, out := float64(1.1), float64(2.5)
+
+	os.Setenv("FLOAT64", "2.5")
+
+	if got := Float64("FLOAT64", in); got != out {
+		t.Errorf(`Float64("FLOAT64", %v) = %v, want %v`, in, got, out)
+	}
+}
+
+func TestFloat64Default(t *testing.T) {
+	in, out := float64(5.2), float64(5.2)
+
+	os.Clearenv()
+
+	if got := Float64("FLOAT64_DEFAULT", in); got != out {
+		t.Errorf(`Float64("FLOAT64_DEFAULT", %v) = %v, want %v`, in, got, out)
+	}
+}
+
 func TestInt(t *testing.T) {
 	in, out := 1, 2
 

@@ -57,7 +57,16 @@ func Bytes(key string, fallback []byte) []byte {
 	return fallback
 }
 
-// Duration return a duration from the ENV, or fallback variable
+// Float64 returns a float64 from the ENV, or a fallback variable
+func Float64(key string, fallback float64) float64 {
+	if f, err := strconv.ParseFloat(os.Getenv(key), 64); err == nil {
+		return f
+	}
+
+	return fallback
+}
+
+// Duration returns a duration from the ENV, or fallback variable
 func Duration(key string, fallback time.Duration) time.Duration {
 	if d, err := time.ParseDuration(os.Getenv(key)); err == nil {
 		return d
