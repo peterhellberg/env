@@ -1,12 +1,12 @@
 # env
 
-Load environment variables into Go types, with fallback values.
-
 [![Build Status](https://travis-ci.org/peterhellberg/env.svg?branch=master)](https://travis-ci.org/peterhellberg/env)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/peterhellberg/env)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/env#license-mit)
 
-The supported types are `bool`, `[]byte`, `time.Duration`, `int` and `string`
+Load environment variables into Go types, with fallback values.
+
+The currently supported types are `bool`, `[]byte`, `time.Duration`, `int` and `string`
 
 ## Installation
 
