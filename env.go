@@ -1,3 +1,38 @@
+/*
+
+Package env
+
+Load environment variables into Go types, with fallback values.
+
+Installation
+
+Just go get the package:
+
+    go get -u github.com/peterhellberg/env
+
+Usage
+
+A small usage example
+
+    package main
+
+    import (
+    	"fmt"
+
+    	"github.com/peterhellberg/env"
+    )
+
+    func main() {
+    	fmt.Println(
+    		env.Bool("BOOL", false),
+    		env.Bytes("BYTES", []byte{4, 2}),
+    		env.Duration("DURATION", 250000),
+    		env.Int("INT", 1337),
+    		env.String("STRING", "Foobar"),
+    	)
+    }
+
+*/
 package env
 
 import (
