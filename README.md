@@ -14,6 +14,8 @@ The currently supported types are `bool`, `[]byte`, `time.Duration`, `float64`, 
 
     go get -u github.com/peterhellberg/env
 
+Feel free to copy all or parts of this package into your own codebase.
+
 ## Usage
 
 ```go
