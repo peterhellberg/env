@@ -1,11 +1,14 @@
-package env
+package env_test
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/peterhellberg/env"
 )
 
 func TestBool(t *testing.T) {
@@ -23,7 +26,7 @@ func TestBool(t *testing.T) {
 	for _, tt := range tests {
 		os.Setenv("BOOL", tt.env)
 
-		if got := Bool("BOOL", tt.in); got != tt.out {
+		if got := env.Bool("BOOL", tt.in); got != tt.out {
 			t.Errorf(`Bool("BOOL", %v) = %v, want %v`, tt.in, got, tt.out)
 		}
 	}
@@ -34,9 +37,16 @@ func TestBoolDefault(t *testing.T) {
 
 	os.Clearenv()
 
-	if got := Bool("BOOL_DEFAULT", in); got != out {
+	if got := env.Bool("BOOL_DEFAULT", in); got != out {
 		t.Errorf(`Bool("BOOL_DEFAULT", %v) = %v, want %v`, in, got, out)
 	}
+}
+
+func ExampleBool() {
+	os.Setenv("BOOL", "t")
+
+	fmt.Println(env.Bool("BOOL", false))
+	// Output: true
 }
 
 func TestBytes(t *testing.T) {
@@ -44,7 +54,7 @@ func TestBytes(t *testing.T) {
 
 	os.Setenv("BYTES", string(out))
 
-	if got := Bytes("BYTES", in); !bytes.Equal(got, out) {
+	if got := env.Bytes("BYTES", in); !bytes.Equal(got, out) {
 		t.Errorf(`Bytes("BYTES", "%s") = %s, want %s`, in, got, out)
 	}
 }
@@ -54,9 +64,16 @@ func TestBytesDefault(t *testing.T) {
 
 	os.Clearenv()
 
-	if got := Bytes("BYTES_DEFAULT", in); !bytes.Equal(got, out) {
+	if got := env.Bytes("BYTES_DEFAULT", in); !bytes.Equal(got, out) {
 		t.Errorf(`Bytes("BYTES_DEFAULT", "%s") = %s, want %s`, in, got, out)
 	}
+}
+
+func ExampleBytes() {
+	os.Setenv("BYTES", "foo")
+
+	fmt.Printf("%s", env.Bytes("BYTES", nil))
+	// Output: foo
 }
 
 func TestDuration(t *testing.T) {
@@ -64,7 +81,7 @@ func TestDuration(t *testing.T) {
 
 	os.Setenv("DURATION", in)
 
-	if got := Duration("DURATION", fallback); got != out {
+	if got := env.Duration("DURATION", fallback); got != out {
 		t.Errorf(`Duration("DURATION", %#v) = %v, want %v`, in, got, out)
 	}
 }
@@ -74,9 +91,16 @@ func TestDurationDefault(t *testing.T) {
 
 	os.Clearenv()
 
-	if got := Duration("DURATION_DEFAULT", fallback); got != fallback {
+	if got := env.Duration("DURATION_DEFAULT", fallback); got != fallback {
 		t.Errorf(`Duration("DURATION_DEFAULT", %#v) = %v, want %v`, fallback, got)
 	}
+}
+
+func ExampleDuration() {
+	os.Setenv("DURATION", "23s")
+
+	fmt.Printf("%s", env.Duration("DURATION", 0))
+	// Output: 23s
 }
 
 func TestFloat64(t *testing.T) {
@@ -84,7 +108,7 @@ func TestFloat64(t *testing.T) {
 
 	os.Setenv("FLOAT64", "2.5")
 
-	if got := Float64("FLOAT64", in); got != out {
+	if got := env.Float64("FLOAT64", in); got != out {
 		t.Errorf(`Float64("FLOAT64", %v) = %v, want %v`, in, got, out)
 	}
 }
@@ -94,9 +118,16 @@ func TestFloat64Default(t *testing.T) {
 
 	os.Clearenv()
 
-	if got := Float64("FLOAT64_DEFAULT", in); got != out {
+	if got := env.Float64("FLOAT64_DEFAULT", in); got != out {
 		t.Errorf(`Float64("FLOAT64_DEFAULT", %v) = %v, want %v`, in, got, out)
 	}
+}
+
+func ExampleFloat64() {
+	os.Setenv("FLOAT64", "1.23")
+
+	fmt.Println(env.Float64("FLOAT64", 0))
+	// Output: 1.23
 }
 
 func TestInt(t *testing.T) {
@@ -104,7 +135,7 @@ func TestInt(t *testing.T) {
 
 	os.Setenv("INT", strconv.Itoa(out))
 
-	if got := Int("INT", in); got != out {
+	if got := env.Int("INT", in); got != out {
 		t.Errorf(`Int("INT", %v) = %v, want %v`, in, got, out)
 	}
 }
@@ -114,9 +145,16 @@ func TestIntDefault(t *testing.T) {
 
 	os.Clearenv()
 
-	if got := Int("INT_DEFAULT", in); got != out {
+	if got := env.Int("INT_DEFAULT", in); got != out {
 		t.Errorf(`Int("INT_DEFAULT", %v) = %v, want %v`, in, got, out)
 	}
+}
+
+func ExampleInt() {
+	os.Setenv("INT", "345")
+
+	fmt.Println(env.Int("INT", 0))
+	// Output: 345
 }
 
 func TestString(t *testing.T) {
@@ -124,7 +162,7 @@ func TestString(t *testing.T) {
 
 	os.Setenv("STRING", out)
 
-	if got := String("STRING", in); got != out {
+	if got := env.String("STRING", in); got != out {
 		t.Errorf(`String("STRING", "%v") = %v, want %v`, in, got, out)
 	}
 }
@@ -134,7 +172,14 @@ func TestStringDefault(t *testing.T) {
 
 	os.Clearenv()
 
-	if got := String("STRING_DEFAULT", in); got != out {
+	if got := env.String("STRING_DEFAULT", in); got != out {
 		t.Errorf(`String("STRING_DEFAULT", "%v") = %v, want %v`, in, got, out)
 	}
+}
+
+func ExampleString() {
+	os.Setenv("STRING", "foo bar")
+
+	fmt.Println(env.String("STRING", ""))
+	// Output: foo bar
 }
