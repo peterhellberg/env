@@ -92,7 +92,7 @@ func TestDurationDefault(t *testing.T) {
 	os.Clearenv()
 
 	if got := env.Duration("DURATION_DEFAULT", fallback); got != fallback {
-		t.Errorf(`Duration("DURATION_DEFAULT", %#v) = %v, want %v`, fallback, got)
+		t.Errorf(`Duration("DURATION_DEFAULT", %#v) = %v, want %v`, fallback, got, fallback)
 	}
 }
 
