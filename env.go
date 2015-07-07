@@ -36,6 +36,7 @@ package env
 import (
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -88,6 +89,15 @@ func Int(key string, fallback int) int {
 func String(key, fallback string) string {
 	if v := os.Getenv(key); v != "" {
 		return v
+	}
+
+	return fallback
+}
+
+// Strings returns a slice of strings from the ENV, or fallback variable
+func Strings(key string, fallback []string) []string {
+	if v := os.Getenv(key); v != "" {
+		return strings.Split(v, ",")
 	}
 
 	return fallback

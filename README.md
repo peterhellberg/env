@@ -8,7 +8,7 @@ Load environment variables into Go types, with fallback values.
 
 This package is meant to be used when configuring a [twelve-factor app](http://12factor.net/).
 
-The currently supported types are `bool`, `[]byte`, `time.Duration`, `float64`, `int` and `string`
+The currently supported types are `bool`, `[]byte`, `time.Duration`, `float64`, `int`, `string` and `[]string`
 
 ## Installation
 

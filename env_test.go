@@ -183,3 +183,43 @@ func ExampleString() {
 	fmt.Println(env.String("STRING", ""))
 	// Output: foo bar
 }
+
+func TestStrings(t *testing.T) {
+	eqStrings := func(a, b []string) bool {
+		if len(a) != len(b) {
+			return false
+		}
+
+		for i := range a {
+			if a[i] != b[i] {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	tests := []struct {
+		env      string
+		fallback []string
+		want     []string
+	}{
+		{"foo,bar,baz", []string{}, []string{"foo", "bar", "baz"}},
+		{"", []string{"sit", "amet"}, []string{"sit", "amet"}},
+	}
+
+	for _, tt := range tests {
+		os.Setenv("STRINGS", tt.env)
+
+		if got := env.Strings("STRINGS", tt.fallback); !eqStrings(got, tt.want) {
+			t.Errorf(`String("STRINGS", %q) = %q, want %q`, tt.fallback, got, tt.want)
+		}
+	}
+}
+
+func ExampleStrings() {
+	os.Setenv("STRINGS", "foo,bar,baz")
+
+	fmt.Println(env.Strings("STRINGS", []string{}))
+	// Output: [foo bar baz]
+}
