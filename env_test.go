@@ -3,6 +3,7 @@ package env_test
 import (
 	"bytes"
 	"fmt"
+	"net/url"
 	"os"
 	"strconv"
 	"testing"
@@ -217,9 +218,71 @@ func TestStrings(t *testing.T) {
 	}
 }
 
+func TestStrings_differentSeparator(t *testing.T) {
+	eqStrings := func(a, b []string) bool {
+		if len(a) != len(b) {
+			return false
+		}
+
+		for i := range a {
+			if a[i] != b[i] {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	tests := []struct {
+		env      string
+		sep      string
+		fallback []string
+		want     []string
+	}{
+		{"foo-bar-baz", "-", []string{}, []string{"foo", "bar", "baz"}},
+		{"foo/bar/baz", "/", []string{}, []string{"foo", "bar", "baz"}},
+		{"", "/", []string{"sit", "amet"}, []string{"sit", "amet"}},
+	}
+
+	for _, tt := range tests {
+		os.Setenv("STRINGS", tt.env)
+
+		if got := env.Strings("STRINGS", tt.fallback, tt.sep); !eqStrings(got, tt.want) {
+			t.Errorf(`String("STRINGS", %q, %q) = %q, want %q`, tt.fallback, tt.sep, got, tt.want)
+		}
+	}
+}
+
 func ExampleStrings() {
 	os.Setenv("STRINGS", "foo,bar,baz")
 
 	fmt.Println(env.Strings("STRINGS", []string{}))
 	// Output: [foo bar baz]
+}
+
+func TestURL(t *testing.T) {
+	in, out := &url.URL{Host: "example.com"}, &url.URL{Host: "example.com"}
+
+	os.Setenv("URL", out.String())
+
+	if got := env.URL("URL", in); got.String() != out.String() {
+		t.Errorf(`URL("URL", "%v") = %v, want %v`, in, got, out)
+	}
+}
+
+func TestURLDefault(t *testing.T) {
+	in, out := &url.URL{Host: "example.com"}, &url.URL{Host: "example.com"}
+
+	os.Clearenv()
+
+	if got := env.URL("URL_DEFAULT", in); got.String() != out.String() {
+		t.Errorf(`URL("URL_DEFAULT", "%v") = %v, want %v`, in, got, out)
+	}
+}
+
+func ExampleURL() {
+	os.Setenv("URL", "http://example.com/foo")
+
+	fmt.Println(env.URL("URL", &url.URL{Host: "fallback"}).String())
+	// Output: http://example.com/foo
 }
