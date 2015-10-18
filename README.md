@@ -8,7 +8,7 @@ Load environment variables into Go types, with fallback values.
 
 This package is meant to be used when configuring a [twelve-factor app](http://12factor.net/).
 
-The currently supported types are `bool`, `[]byte`, `time.Duration`, `float64`, `int`, `string` and `[]string`
+The currently supported types are `bool`, `[]byte`, `time.Duration`, `float64`, `int`, `string`, `[]string` and `*url.URL`
 
 ## Installation
 
@@ -35,16 +35,18 @@ func main() {
 		env.Float64("FLOAT64", float64(2.5)),
 		env.Int("INT", 1337),
 		env.String("STRING", "Foobar"),
+		env.Strings("STRINGS", []string{"Foo", "Bar"}),
+		env.URL("URL", &url.URL{Scheme: "http", Host: "example.com"}),
 	)
 }
 ```
 
 ```bash
 $ go run example.go
-false [4 2] 250µs 2.5 1337 Foobar
+false [4 2] 250µs 2.5 1337 Foobar [Foo Bar] http://example.com
 
-$ BOOL=true BYTES=foo DURATION=24m FLOAT64=11.2 INT=2600 STRING=hello go run example.go
-true [102 111 111] 24m0s 11.2 2600 hello
+$ BOOL=true BYTES=foo DURATION=24m FLOAT64=11.2 INT=2600 STRING=hello STRINGS=a,b URL=http://c7.se/ go run example.go
+true [102 111 111] 24m0s 11.2 2600 hello [a b] http://c7.se/
 ```
 
 ## License (MIT)
