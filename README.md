@@ -1,6 +1,7 @@
 # env
 
 [![Build Status](https://travis-ci.org/peterhellberg/env.svg?branch=master)](https://travis-ci.org/peterhellberg/env)
+[![Go Report Card](https://goreportcard.com/badge/github.com/peterhellberg/env)](https://goreportcard.com/report/github.com/peterhellberg/env)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/peterhellberg/env)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/env#license-mit)
 
