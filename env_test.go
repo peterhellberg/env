@@ -12,6 +12,26 @@ import (
 	"github.com/peterhellberg/env"
 )
 
+func TestMapClient(t *testing.T) {
+	e := env.MapClient(env.Map{
+		"FOO": "bar",
+		"BAR": "123",
+		"BAZ": "true",
+	})
+
+	if got, want := e.String("FOO", ""), "bar"; got != want {
+		t.Fatalf(`String("FOO", "") = %q, want %q`, got, want)
+	}
+
+	if got, want := e.Int("BAR", 0), 123; got != want {
+		t.Fatalf(`Int("BAR", 0) = %d, want %d`, got, want)
+	}
+
+	if !e.Bool("BAZ", false) {
+		t.Fatalf(`!Bool("BAZ", false)`)
+	}
+}
+
 func TestBool(t *testing.T) {
 	tests := []struct {
 		env string

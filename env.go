@@ -65,6 +65,14 @@ func NewClient(f func(string) string) Client {
 	return &client{f}
 }
 
+// Map is a map[string]string
+type Map map[string]string
+
+// MapClient creates a new Client backed by provided map[string]string
+func MapClient(v map[string]string) Client {
+	return NewClient(Func(v))
+}
+
 // Func creates a func(string) string backed by a map[string]string
 func Func(v map[string]string) func(string) string {
 	return func(k string) string {
