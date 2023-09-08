@@ -52,7 +52,7 @@ true [102 111 111] 24m0s 11.2 2600 hello [a b] http://c7.se/
 
 ## License (MIT)
 
-Copyright (c) 2015-2019 [Peter Hellberg](https://c7.se)
+Copyright (c) 2015-2023 [Peter Hellberg](https://c7.se)
 
 > Permission is hereby granted, free of charge, to any person obtaining
 > a copy of this software and associated documentation files (the
