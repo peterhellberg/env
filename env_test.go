@@ -45,7 +45,7 @@ func TestBool(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		os.Setenv("BOOL", tt.env)
+		t.Setenv("BOOL", tt.env)
 
 		if got := env.Bool("BOOL", tt.in); got != tt.out {
 			t.Errorf(`Bool("BOOL", %v) = %v, want %v`, tt.in, got, tt.out)
@@ -73,7 +73,7 @@ func ExampleBool() {
 func TestBytes(t *testing.T) {
 	in, out := []byte("baz"), []byte("bar")
 
-	os.Setenv("BYTES", string(out))
+	t.Setenv("BYTES", string(out))
 
 	if got := env.Bytes("BYTES", in); !bytes.Equal(got, out) {
 		t.Errorf(`Bytes("BYTES", "%s") = %s, want %s`, in, got, out)
@@ -100,7 +100,7 @@ func ExampleBytes() {
 func TestDuration(t *testing.T) {
 	in, fallback, out := "5s", 10*time.Minute, 5*time.Second
 
-	os.Setenv("DURATION", in)
+	t.Setenv("DURATION", in)
 
 	if got := env.Duration("DURATION", fallback); got != out {
 		t.Errorf(`Duration("DURATION", %#v) = %v, want %v`, in, got, out)
@@ -127,7 +127,7 @@ func ExampleDuration() {
 func TestFloat64(t *testing.T) {
 	in, out := float64(1.1), float64(2.5)
 
-	os.Setenv("FLOAT64", "2.5")
+	t.Setenv("FLOAT64", "2.5")
 
 	if got := env.Float64("FLOAT64", in); got != out {
 		t.Errorf(`Float64("FLOAT64", %v) = %v, want %v`, in, got, out)
@@ -154,7 +154,7 @@ func ExampleFloat64() {
 func TestInt(t *testing.T) {
 	in, out := 1, 2
 
-	os.Setenv("INT", strconv.Itoa(out))
+	t.Setenv("INT", strconv.Itoa(out))
 
 	if got := env.Int("INT", in); got != out {
 		t.Errorf(`Int("INT", %v) = %v, want %v`, in, got, out)
@@ -181,7 +181,7 @@ func ExampleInt() {
 func TestString(t *testing.T) {
 	in, out := "baz", "bar"
 
-	os.Setenv("STRING", out)
+	t.Setenv("STRING", out)
 
 	if got := env.String("STRING", in); got != out {
 		t.Errorf(`String("STRING", "%v") = %v, want %v`, in, got, out)
@@ -230,7 +230,7 @@ func TestStrings(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		os.Setenv("STRINGS", tt.env)
+		t.Setenv("STRINGS", tt.env)
 
 		if got := env.Strings("STRINGS", tt.fallback); !eqStrings(got, tt.want) {
 			t.Errorf(`String("STRINGS", %q) = %q, want %q`, tt.fallback, got, tt.want)
@@ -265,7 +265,7 @@ func TestStrings_differentSeparator(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		os.Setenv("STRINGS", tt.env)
+		t.Setenv("STRINGS", tt.env)
 
 		if got := env.Strings("STRINGS", tt.fallback, tt.sep); !eqStrings(got, tt.want) {
 			t.Errorf(`String("STRINGS", %q, %q) = %q, want %q`, tt.fallback, tt.sep, got, tt.want)
@@ -283,7 +283,7 @@ func ExampleStrings() {
 func TestURL(t *testing.T) {
 	in, out := &url.URL{Host: "example.com"}, &url.URL{Host: "example.com"}
 
-	os.Setenv("URL", out.String())
+	t.Setenv("URL", out.String())
 
 	if got := env.URL("URL", in); got.String() != out.String() {
 		t.Errorf(`URL("URL", "%v") = %v, want %v`, in, got, out)
